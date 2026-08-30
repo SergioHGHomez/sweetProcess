@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..800;1,400..800&family=Manrope:wght@200..800&display=swap');
+
+:root{
+  /* Brand palette */
+  --blue-deep:#1e3a8a;
+  --blue-medium:#2563eb;
+  --gold:#fbbf24;
+  --cream:#fff7e6;
+  --brown-coffee:#6b3e26;
+
+  /* Derived brand steps */
+  --blue-deep-dark:oklch(from var(--blue-deep) calc(l - 0.08) c h);
+  --blue-medium-dark:oklch(from var(--blue-medium) calc(l - 0.08) c h);
+  --gold-dark:oklch(from var(--gold) calc(l - 0.1) c h);
+  --gold-light:oklch(from var(--gold) calc(l + 0.12) calc(c - 0.03) h);
+  --cream-dark:oklch(from var(--cream) calc(l - 0.04) c h);
+  --brown-light:oklch(from var(--brown-coffee) calc(l + 0.15) c h);
+
+  /* Neutrals (warm-tinted) */
+  --neutral-900:oklch(0.22 0.02 55);
+  --neutral-700:oklch(0.4 0.02 55);
+  --neutral-500:oklch(0.58 0.015 55);
+  --neutral-300:oklch(0.82 0.012 55);
+  --neutral-200:oklch(0.9 0.01 55);
+  --neutral-100:oklch(0.96 0.006 60);
+  --white:#ffffff;
+
+  /* Status */
+  --success:#2f7d4f;
+  --error:#c0392b;
+
+  /* Semantic — surfaces */
+  --surface-page:var(--cream);
+  --surface-card:var(--white);
+  --surface-sunken:var(--neutral-100);
+  --surface-inverse:var(--blue-deep);
+
+  /* Semantic — text */
+  --text-primary:var(--neutral-900);
+  --text-secondary:var(--neutral-700);
+  --text-muted:var(--neutral-500);
+  --text-on-dark:var(--cream);
+  --text-link:var(--blue-medium);
+  --text-link-hover:var(--blue-deep);
+
+  /* Semantic — borders & brand roles */
+  --border-default:var(--neutral-300);
+  --border-strong:var(--neutral-500);
+  --brand-primary:var(--blue-deep);
+  --brand-primary-hover:var(--blue-deep-dark);
+  --brand-accent:var(--gold);
+  --brand-accent-hover:var(--gold-dark);
+  --focus-ring:var(--blue-medium);
+
+  --font-display:"Playfair Display",Georgia,serif;
+  --font-body:"Manrope",-apple-system,Helvetica,sans-serif;
+}
