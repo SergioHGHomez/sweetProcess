@@ -64,6 +64,7 @@
 body{
   font-family : var(--font-body);
   background-color : var(--surface-page);
+  margin : 0px;
 }
 
 
@@ -77,7 +78,7 @@ body{
   color : var(--text-on-dark);
   padding : 16px;
   width : 250px;
-  border-radius : 20px 0 0 20px;
+  border-radius : 0px 0 0 20px;
 }
 
 
