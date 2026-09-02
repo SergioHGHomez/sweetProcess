@@ -31,6 +31,7 @@
   /* Status */
   --success:#2f7d4f;
   --error:#c0392b;
+  --error-light:#f8d7da;
 
   /* Semantic — surfaces */
   --surface-page:var(--cream);
@@ -68,9 +69,12 @@ body{
 }
 
 main{
-  margin : 25px;
+  margin : 36px;
 }
 
+p{
+  margin : 0px;
+}
 
 
 
@@ -83,6 +87,7 @@ main{
   padding : 16px;
   width : 250px;
   border-radius : 0px 0 0 20px;
+  height :fit-content;
 }
 
 
@@ -105,6 +110,10 @@ main{
   margin : 0px;
 }
 
+#action-buttons{
+  border-top: 1px solid #748099;
+}
+
 .action-button{
   display : flex;
   align-items : center;
@@ -121,6 +130,12 @@ main{
 }
 
 /* content */
+.cards{
+  display : flex; 
+  flex-direction : column;
+  gap : 16px;
+}
+
 .card{
   padding : 20px;
   border-radius : 16px;
@@ -155,20 +170,93 @@ main{
 
 .option-icon--big{
   font-size : 2rem;
+  margin-right : 20px;
 }
 
 /* buttons   */
+
+.action-buttons{
+  display : flex;
+  gap : 10px;
+}
 
 .button{
   padding : 10px 20px;
   border-radius : 24px;
   border: none;
+  cursor : pointer;
 }
 
 .button--primary{
   background-color : var(--secondary-color);
 }
 
+.button--blue{
+  background-color : var(--blue-deep);
+  color : var(--white);
+}
+
+.button--white{
+  background-color : var(--white);
+  color : var(--blue-deep);
+  border : 1px solid var(--blue-deep);
+}
+
+.button--whiteNoBorder{
+  background-color : var(--white);
+  color : var(--blue-deep);
+}
+
+.button--grey{
+  background-color : var(--neutral-100);
+  color : var(--neutral-900);
+  font-weight : bold;
+}
+
 .width-100{
   width : 100%;
+}
+
+/* product */
+.product{
+  display : flex;
+  gap : 5px;
+}
+
+.product_name{
+  font-size : 1.2rem;
+  font-weight : bold;
+}
+
+.product_status{
+
+  background-color : var(--brand-accent);
+  padding : 2px 16px;
+  border-radius : 50px;
+  font-size : 0.7rem;
+  text-align : center;
+  justify-content : center;
+  display : flex;
+  align-items : center;
+  text-transform : uppercase;
+  font-weight : bold;
+}
+
+.product_status--inProcess{
+background-color : var(--blue-deep);
+color : var(--white);
+}
+
+.product_status--pending{
+background-color : var(--neutral-100);
+color : var(--neutral-900);}
+
+.product_status--finished{
+background-color : var(--success);
+color : var(--white);
+}
+
+.product_status--Eventuality{
+  background-color : var(--error-light);
+  color : var(--error);
 }
