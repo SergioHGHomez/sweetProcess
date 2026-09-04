@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>nolimits | Iniciar sesión</title>
+
+<!-- Font Awesome (fontawesome.com / cdnjs) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- ============ SELECTOR DE PERFIL ============ -->
+<div class="role-switch" role="tablist" aria-label="Tipo de acceso">
+  <button type="button" class="role-switch__btn is-active" id="tabCliente" role="tab" aria-selected="true" aria-controls="panelCliente">
+    <i class="fa-solid fa-user" aria-hidden="true"></i> Cliente
+  </button>
+  <button type="button" class="role-switch__btn" id="tabEmpleado" role="tab" aria-selected="false" aria-controls="panelEmpleado">
+    <i class="fa-solid fa-briefcase" aria-hidden="true"></i> Empleado
+  </button>
+</div>
+
+<!-- ============ PANEL CLIENTE ============ -->
+<main class="screen screen--cliente is-active" id="panelCliente" role="tabpanel" aria-labelledby="tabCliente">
+  <div class="cliente-card">
+
+    <section class="cliente-form">
+      <header class="brand">
+        <h1 class="brand__name">nolimits</h1>
+        <p class="brand__tag">postrería</p>
+      </header>
+
+      <h2 class="form-title">Bienvenido de vuelta</h2>
+      <p class="form-subtitle">Inicia sesión para seguir tus pedidos y guardar tus favoritos.</p>
+
+      <button type="button" class="btn btn--google" id="googleLoginBtn">
+        <i class="fa-brands fa-google" aria-hidden="true"></i> Continuar con Google
+      </button>
+
+      <div class="divider"><span>o con tu correo</span></div>
+
+      <form id="formCliente" novalidate>
+        <div class="field">
+          <label for="clienteEmail">Correo electrónico</label>
+          <div class="input-wrap">
+            <i class="fa-regular fa-envelope" aria-hidden="true"></i>
+            <input type="email" id="clienteEmail" name="email" placeholder="tu@correo.com" autocomplete="email" required>
+          </div>
+          <p class="field-error" id="clienteEmailError" aria-live="polite"></p>
+        </div>
+
+        <div class="field">
+          <label for="clientePassword">Contraseña</label>
+          <div class="input-wrap">
+            <i class="fa-solid fa-lock" aria-hidden="true"></i>
+            <input type="password" id="clientePassword" name="password" placeholder="••••••••" autocomplete="current-password" required minlength="6">
+            <button type="button" class="toggle-pwd" data-target="clientePassword" aria-label="Mostrar contraseña">
+              <i class="fa-regular fa-eye" aria-hidden="true"></i>
+            </button>
+          </div>
+          <p class="field-error" id="clientePasswordError" aria-live="polite"></p>
+        </div>
+
+        <button type="button" class="link-btn forgot-link" data-role="cliente">¿Olvidaste tu contraseña?</button>
+
+        <button type="submit" class="btn btn--primary btn--full">
+          <span class="btn-label">Iniciar sesión</span>
+          <i class="fa-solid fa-spinner fa-spin btn-spinner" aria-hidden="true" hidden></i>
+        </button>
+
+        <p class="form-note" id="clienteFormNote" aria-live="polite"></p>
+      </form>
+
+      <p class="switch-line">¿Aún no tienes cuenta? <button type="button" class="link-btn" id="openRegister">Regístrate</button></p>
+    </section>
+
+    <aside class="cliente-showcase" aria-label="Vitrina de postres nolimits">
+      <div class="showcase-slide is-active">
+        <img src="assets/img/cheesecake-maracumango-1.jpeg" alt="Cheesecake de maracumango decorado con kiwi y durazno">
+        <p class="showcase-caption">Cheesecake de maracumango</p>
+      </div>
+      <div class="showcase-slide">
+        <img src="assets/img/cheesecake-frutos-rojos.jpeg" alt="Cheesecake cubierto con mermelada de frutos rojos">
+        <p class="showcase-caption">Cheesecake de frutos rojos</p>
+      </div>
+      <div class="showcase-slide">
+        <img src="assets/img/postre-limon.jpeg" alt="Porción de postre de limón con rodaja de limón fresca">
+        <p class="showcase-caption">Postre de limón</p>
+      </div>
+      <div class="showcase-dots" id="showcaseDots"></div>
+    </aside>
+
+  </div>
+</main>
+
+<!-- ============ PANEL EMPLEADO ============ -->
+<main class="screen screen--empleado" id="panelEmpleado" role="tabpanel" aria-labelledby="tabEmpleado" hidden>
+  <div class="empleado-bg" aria-hidden="true">
+    <img src="assets/img/cheesecake-maracumango-1.jpeg" alt="">
+    <img src="assets/img/cheesecake-maracumango-2.jpeg" alt="">
+    <img src="assets/img/cheesecake-frutos-rojos.jpeg" alt="">
+    <img src="assets/img/postre-limon.jpeg" alt="">
+  </div>
+  <div class="empleado-card">
+    <header class="brand">
+      <h1 class="brand__name brand__name--empleado">nolimits</h1>
+      <p class="brand__tag brand__tag--empleado">panel interno</p>
+    </header>
+
+    <h2 class="form-title">Acceso de empleados</h2>
+
+    <form id="formEmpleado" novalidate>
+      <div class="field">
+        <label for="empleadoEmail">Correo corporativo</label>
+        <div class="input-wrap">
+          <i class="fa-regular fa-envelope" aria-hidden="true"></i>
+          <input type="email" id="empleadoEmail" name="email" placeholder="nombre.apellido@nolimits.co" autocomplete="email" required>
+        </div>
+        <p class="field-error" id="empleadoEmailError" aria-live="polite"></p>
+      </div>
+
+      <div class="field">
+        <label for="empleadoPassword">Contraseña</label>
+        <div class="input-wrap">
+          <i class="fa-solid fa-lock" aria-hidden="true"></i>
+          <input type="password" id="empleadoPassword" name="password" placeholder="••••••••" autocomplete="current-password" required minlength="6">
+          <button type="button" class="toggle-pwd" data-target="empleadoPassword" aria-label="Mostrar contraseña">
+            <i class="fa-regular fa-eye" aria-hidden="true"></i>
+          </button>
+        </div>
+        <p class="field-error" id="empleadoPasswordError" aria-live="polite"></p>
+      </div>
+
+      <button type="button" class="link-btn forgot-link" data-role="empleado">¿Olvidaste tu contraseña?</button>
+
+      <button type="submit" class="btn btn--primary btn--full">
+        <span class="btn-label">Iniciar sesión</span>
+        <i class="fa-solid fa-spinner fa-spin btn-spinner" aria-hidden="true" hidden></i>
+      </button>
+
+      <p class="form-note" id="empleadoFormNote" aria-live="polite"></p>
+    </form>
+  </div>
+</main>
+
+<!-- ============ MODAL: RECUPERAR CONTRASEÑA ============ -->
+<div class="modal-overlay" id="forgotModal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="forgotTitle">
+    <button type="button" class="modal-close" id="closeForgotModal" aria-label="Cerrar">
+      <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+    </button>
+    <i class="fa-solid fa-unlock-keyhole modal-icon" aria-hidden="true"></i>
+    <h3 id="forgotTitle">Recuperar contraseña</h3>
+    <p class="modal-text">Escribe tu correo y te enviaremos instrucciones para restablecerla.</p>
+    <form id="formForgot" novalidate>
+      <div class="field">
+        <label for="forgotEmail">Correo electrónico</label>
+        <div class="input-wrap">
+          <i class="fa-regular fa-envelope" aria-hidden="true"></i>
+          <input type="email" id="forgotEmail" name="email" placeholder="tu@correo.com" required>
+        </div>
+        <p class="field-error" id="forgotEmailError" aria-live="polite"></p>
+      </div>
+      <button type="submit" class="btn btn--primary btn--full">Enviar instrucciones</button>
+      <p class="form-note" id="forgotFormNote" aria-live="polite"></p>
+    </form>
+  </div>
+</div>
+
+<!-- ============ MODAL: REGISTRO CLIENTE ============ -->
+<div class="modal-overlay" id="registerModal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="registerTitle">
+    <button type="button" class="modal-close" id="closeRegisterModal" aria-label="Cerrar">
+      <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+    </button>
+    <i class="fa-solid fa-cake-candles modal-icon" aria-hidden="true"></i>
+    <h3 id="registerTitle">Crea tu cuenta nolimits</h3>
+    <p class="modal-text">Regístrate para hacer pedidos y guardar tus postres favoritos.</p>
+    <form id="formRegister" novalidate>
+      <div class="field">
+        <label for="registerName">Nombre completo</label>
+        <div class="input-wrap">
+          <i class="fa-regular fa-user" aria-hidden="true"></i>
+          <input type="text" id="registerName" name="name" placeholder="Tu nombre" required>
+        </div>
+        <p class="field-error" id="registerNameError" aria-live="polite"></p>
+      </div>
+      <div class="field">
+        <label for="registerEmail">Correo electrónico</label>
+        <div class="input-wrap">
+          <i class="fa-regular fa-envelope" aria-hidden="true"></i>
+          <input type="email" id="registerEmail" name="email" placeholder="tu@correo.com" required>
+        </div>
+        <p class="field-error" id="registerEmailError" aria-live="polite"></p>
+      </div>
+      <div class="field">
+        <label for="registerPassword">Contraseña</label>
+        <div class="input-wrap">
+          <i class="fa-solid fa-lock" aria-hidden="true"></i>
+          <input type="password" id="registerPassword" name="password" placeholder="Mínimo 6 caracteres" required minlength="6">
+          <button type="button" class="toggle-pwd" data-target="registerPassword" aria-label="Mostrar contraseña">
+            <i class="fa-regular fa-eye" aria-hidden="true"></i>
+          </button>
+        </div>
+        <p class="field-error" id="registerPasswordError" aria-live="polite"></p>
+      </div>
+      <button type="submit" class="btn btn--primary btn--full">Crear cuenta</button>
+      <p class="form-note" id="registerFormNote" aria-live="polite"></p>
+    </form>
+  </div>
+</div>
+
+<!-- ============ TOASTS ============ -->
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="js/script.js"></script>
+</body>
+</html>
