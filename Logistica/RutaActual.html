@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../style.css">
+    <script src="https://kit.fontawesome.com/cbd3f1ded0.js" crossorigin="anonymous"></script>
+</head>
+<style>
+    #goople-map_iframe{
+        width : 100%;
+        height : 80vh;
+        border-radius: 25px;
+    }
+
+    .google-map{
+        margin-left: 20px;
+    }
+</style>
+
+<body class="flex"></body>
+    <div id="menu">
+        <div class="menu-item">Logo</div>
+
+        <div class="options">
+            <div class="option">
+                <i class="fa-solid fa-house"></i>
+                <p>Home</p>
+            </div>
+           <div class="option">
+                <i class="option-icon fa-solid fa-chart-line"></i>
+                <p class="option-text">Dashboard</p>
+            </div>
+            <div class="option">
+                <i class="option-icon fa-solid fa-user"></i>
+                <p class="option-text">Usuarios</p>
+            </div>
+            <div class="option">
+                <i class="option-icon fas fa-cookie-bite"></i>
+                <p class="option-text">Catalogo</p>
+            </div>
+        </div>
+        <div id="action-buttons">
+            <div CLass="action-button">
+                <i class="fa-solid fa-arrow-left-long"></i>
+                <p>Cerrar Sesión</p>
+            </div>
+        </div>
+    </div>
+    <main class="width-100 flex">
+        <section class="width-50">
+            <h1>Ruta actual — Zona Centro</h1>
+            <h2>5 paradas • 12.4 km • iniciada 9:30am</h2>
+            <div class="cards">
+                 <div class="card card--flex space-between align-center">
+                    <div class="flex">
+                        <div class="number-icon">
+                            1
+                        </div>
+                        <span>
+                            <div class="product">
+                                <p class="product_name">Producto 1</p>
+                                <div class="product_status product_status--finished">ENTREGADO</div>
+                            </div>
+                            <p>Descripción del producto</p>
+                        </span>
+                    </div>
+                    <div class="action-buttons">
+                       <button class="button button--primary button--light-red">No fue posible</button>
+                        <button class="button button--primary button--blue">Confirmar entregado</button>
+                    </div>
+                </div>
+                <div class="card card--flex space-between align-center">
+                    <div class="flex">
+                        <div class="number-icon">
+                            2
+                        </div>
+                        <span>
+                            <div class="product">
+                                <p class="product_name">Producto 1</p>
+                                <div class="product_status product_status--inProcess">EN PROCESO</div>
+                            </div>
+                            <p>Descripción del producto</p>
+                        </span>
+                    </div>
+                    <div class="action-buttons">
+                       <button class="button button--primary button--light-red">No fue posible</button>
+                        <button class="button button--primary button--blue">Confirmar entregado</button>
+                    </div>
+                </div>
+
+                 <div class="card card--flex space-between align-center">
+                    <div class="flex">
+                        <div class="number-icon">
+                            3
+                        </div>
+                        <span>
+                            <div class="product">
+                                <p class="product_name">Producto 1</p>
+                                <div class="product_status product_status--pending">PENDIENTE</div>
+                            </div>
+                            <p>Descripción del producto</p>
+                        </span>
+                    </div>
+                    <div class="action-buttons">
+                       <button class="button button--primary button--light-red">No fue posible</button>
+                        <button class="button button--primary button--blue">Confirmar entregado</button>
+                    </div>
+                </div>
+        </section>
+        <section class="width-50">
+            <div class="google-map">
+                <iframe id="goople-map_iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3691.713040192612!2d-3.6970569047131223!3d40.44064618926693!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12ce3b4c8c9f081f%3A0x370c0b843a3c3f9a!2sCamino+de+los+Muertos!5e0!3m2!1ses!2ses!4v1675059589104!5m2!1ses!2ses" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </section>
+    </main>
+    
+</body>
+</html>
+

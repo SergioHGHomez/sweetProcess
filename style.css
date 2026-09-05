@@ -8,6 +8,8 @@
   --cream:#fff7e6;
   --brown-coffee:#6b3e26;
 
+  --grey-light:#ededed;
+
   --main-color: var(--blue-deep);
   --secondary-color: var(--gold);
 
@@ -77,6 +79,14 @@ p{
 }
 
 
+/* width */
+.width-50{
+  width : 50%;
+}
+
+.width-100{
+  width : 100%;
+}
 
 
 /*menu*/
@@ -202,6 +212,12 @@ p{
   border : 1px solid var(--blue-deep);
 }
 
+.button--light-red{
+  background-color : var(--white);
+  color : var(--error);
+  border : 1px solid var(--error);
+}
+
 .button--whiteNoBorder{
   background-color : var(--white);
   color : var(--blue-deep);
@@ -213,9 +229,6 @@ p{
   font-weight : bold;
 }
 
-.width-100{
-  width : 100%;
-}
 
 /* product */
 .product{
@@ -259,4 +272,16 @@ color : var(--white);
 .product_status--Eventuality{
   background-color : var(--error-light);
   color : var(--error);
+}
+
+.number-icon{
+  background-color : var(--grey-light);
+  border-radius : 50%;
+  width : 30px;
+  height : 30px;
+  display : flex;
+  justify-content : center;
+  align-items : center;
+  font-weight : bold;
+  margin-right : 10px;
 }
