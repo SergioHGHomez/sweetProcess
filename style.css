@@ -7,8 +7,11 @@
   --gold:#fbbf24;
   --cream:#fff7e6;
   --brown-coffee:#6b3e26;
+  --red:#c0392b;
 
   --grey-light:#ededed;
+  --grey-dark:#748099;
+  --grey: #dddbd8;
 
   --main-color: var(--blue-deep);
   --secondary-color: var(--gold);
@@ -79,6 +82,16 @@ p{
 }
 
 
+.bold{
+  font-weight : bold;
+}
+
+.thin-text{
+  font-weight : 200;
+  color : var(--grey);
+}
+
+
 /* width */
 .width-50{
   width : 50%;
@@ -146,6 +159,13 @@ p{
   gap : 16px;
 }
 
+
+.cards--grid{
+  display : grid;
+  grid-template-columns : repeat(auto-fit, minmax(250px, 1fr));
+  gap : 16px;
+}
+
 .card{
   padding : 20px;
   border-radius : 16px;
@@ -155,6 +175,20 @@ p{
  
 .card--flex{
   display : flex;
+}
+
+/* header */
+.hearder_circle{
+  background-color : var(--blue-deep);
+  width : 40px;
+  height : 40px;
+  padding : 5px;
+  border-radius : 50%;
+  color : var(--cream);
+  display : flex;
+  justify-content : center;
+  align-items : center;
+  margin-left : 20px;
 }
 
 /* common */
@@ -173,14 +207,43 @@ p{
 
 }
 
+/* icons */
+
 .option-icon{
   align-self: center;
   
 }
 
+.option-icon--small{
+  font-size : 1rem;
+  margin-right : 20px;
+}
+
+.option-icon--medium{
+  font-size : 1.5rem;
+  margin-right : 20px;
+}
+
+
 .option-icon--big{
   font-size : 2rem;
   margin-right : 20px;
+}
+
+.option-icon--blue{
+  color : var(--blue-deep);
+}
+
+.option-icon--yellow{
+  color : var(--gold-dark);
+}
+
+.option-icon--red{
+  color : var(--red);
+}
+
+.option-icon--cream{
+  color : var(--cream);
 }
 
 /* buttons   */
@@ -227,6 +290,14 @@ p{
   background-color : var(--neutral-100);
   color : var(--neutral-900);
   font-weight : bold;
+}
+
+.button--large{
+  margin-top : 20px;
+  border-radius : 16px;
+  width : 100%;
+  padding : 20px;
+  text-align : left;
 }
 
 
@@ -284,4 +355,19 @@ color : var(--white);
   align-items : center;
   font-weight : bold;
   margin-right : 10px;
+}
+
+/* dashboard */
+
+.dashboard-card_name{
+  font-weight : bold;
+  font-size : 1.4rem;
+  margin-top : 26px;
+}
+
+
+/* title */
+.title-note{
+  font-size : 1.2rem;
+  color : var(--gold-dark);
 }
