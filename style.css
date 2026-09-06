@@ -206,7 +206,11 @@ p{
 /* common */
 .flex{
   display : flex;
+}
 
+.center{
+  justify-content: center;
+  align-items: center;
 }
 
 .space-between{
@@ -274,6 +278,11 @@ p{
   border-radius : 24px;
   border: none;
   cursor : pointer;
+}
+
+.button--slim{
+  height : fit-content;
+  padding : 16px;
 }
 
 .button--primary{

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../style.css">
+    <script src="https://kit.fontawesome.com/cbd3f1ded0.js" crossorigin="anonymous"></script>
+</head>
+<style>
+    .table-card{
+        padding : 0px;
+        overflow : hidden;
+    }
+
+    .product-table{
+        width : 100%;
+        border-collapse : collapse;
+    }
+
+    .product-table thead th{
+        background-color : var(--surface-sunken);
+        color : var(--text-secondary);
+        text-transform : uppercase;
+        font-size : 0.75rem;
+        letter-spacing : 0.04em;
+        text-align : left;
+        padding : 16px 20px;
+        font-weight : 700;
+    }
+
+    .product-table tbody td{
+        padding : 14px 20px;
+        border-top : 1px solid var(--border-default);
+        vertical-align : middle;
+    }
+
+    .product-table tbody tr:hover{
+        background-color : var(--surface-sunken);
+    }
+
+    .product-thumb{
+        width : 48px;
+        height : 48px;
+        border-radius : 10px;
+        border : 1px dashed var(--border-default);
+        background-color : var(--surface-sunken);
+        color : var(--text-muted);
+        font-size : 0.65rem;
+        text-align : center;
+        display : flex;
+        align-items : center;
+        justify-content : center;
+        line-height : 1.1;
+    }
+
+    .product-table .product-name{
+        font-weight : 700;
+        color : var(--text-primary);
+    }
+
+    .product-table .actions-cell{
+        display : flex;
+        align-items : center;
+        gap : 16px;
+    }
+
+    .link-action{
+        background : none;
+        border : none;
+        padding : 0px;
+        cursor : pointer;
+        font-weight : 600;
+        font-size : 0.9rem;
+    }
+
+    .link-action--edit{
+        color : var(--text-link);
+    }
+
+    .link-action--edit:hover{
+        color : var(--text-link-hover);
+    }
+
+    .link-action--danger{
+        color : var(--error);
+    }
+
+    .link-action--danger:hover{
+        color : oklch(from var(--error) calc(l - 0.1) c h);
+    }
+
+    .product_status--active{
+        background-color : var(--brand-accent);
+        color : var(--neutral-900);
+    }
+
+    .product_status--inactive{
+        background-color : var(--neutral-100);
+        color : var(--text-muted);
+    }
+</style>
+<body class="flex"></body>
+    <div id="menu">
+        <div id="menu-logo">
+            <img src="/src/logo/logo_simple.svg" alt="logo">
+        </div>
+        <p id="rol-name">Repartidor</p>
+
+        <div class="options">
+            <div class="option">
+                <i class="fa-solid fa-house"></i>
+                <p>Home</p>
+            </div>
+           <div class="option">
+                <i class="option-icon fa-solid fa-chart-line"></i>
+                <p class="option-text">Dashboard</p>
+            </div>
+            <div class="option">
+                <i class="option-icon fa-solid fa-user"></i>
+                <p class="option-text">Usuarios</p>
+            </div>
+            <div class="option">
+                <i class="option-icon fas fa-cookie-bite"></i>
+                <p class="option-text">Catalogo</p>
+            </div>
+        </div>
+        <div id="action-buttons">
+            <div CLass="action-button">
+                <i class="fa-solid fa-arrow-left-long"></i>
+                <p>Cerrar Sesión</p>
+            </div>
+        </div>
+    </div>
+    <main class="width-100">
+        <section>
+            <div class="header flex space-between center">
+                <div class="header_left"> 
+                    <h1>Catalogo</h1>
+                </div>
+                <div class="header_right flex space-between"> 
+                    <button class="button button--slim button--blue">
+                        <p>agregar producto</p> 
+                    </button>
+                </div>
+            </div>
+            
+            <div class="card table-card">
+                <table class="product-table">
+                    <thead>
+                        <tr>
+                            <th>Foto</th>
+                            <th>Producto</th>
+                            <th>Categoría</th>
+                            <th>Precio</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><div class="product-thumb">Drop an image</div></td>
+                            <td class="product-name">Tres Leches</td>
+                            <td>Pasteles</td>
+                            <td>$24.000</td>
+                            <td><span class="product_status product_status--active">Activo</span></td>
+                            <td>
+                                <div class="actions-cell">
+                                    <button class="link-action link-action--edit">Editar</button>
+                                    <button class="link-action link-action--danger">Desactivar</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><div class="product-thumb">Drop an image</div></td>
+                            <td class="product-name">Flan de Caramelo</td>
+                            <td>Pasteles</td>
+                            <td>$18.000</td>
+                            <td><span class="product_status product_status--active">Activo</span></td>
+                            <td>
+                                <div class="actions-cell">
+                                    <button class="link-action link-action--edit">Editar</button>
+                                    <button class="link-action link-action--danger">Desactivar</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><div class="product-thumb">Drop an image</div></td>
+                            <td class="product-name">Alfajores</td>
+                            <td>Galletas</td>
+                            <td>$12.000</td>
+                            <td><span class="product_status product_status--active">Activo</span></td>
+                            <td>
+                                <div class="actions-cell">
+                                    <button class="link-action link-action--edit">Editar</button>
+                                    <button class="link-action link-action--danger">Desactivar</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><div class="product-thumb">Drop an image</div></td>
+                            <td class="product-name">Polvorones</td>
+                            <td>Galletas</td>
+                            <td>$10.000</td>
+                            <td><span class="product_status product_status--active">Activo</span></td>
+                            <td>
+                                <div class="actions-cell">
+                                    <button class="link-action link-action--edit">Editar</button>
+                                    <button class="link-action link-action--danger">Desactivar</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><div class="product-thumb">Drop an image</div></td>
+                            <td class="product-name">Café de Olla</td>
+                            <td>Bebidas</td>
+                            <td>$6.000</td>
+                            <td><span class="product_status product_status--active">Activo</span></td>
+                            <td>
+                                <div class="actions-cell">
+                                    <button class="link-action link-action--edit">Editar</button>
+                                    <button class="link-action link-action--danger">Desactivar</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><div class="product-thumb">Drop an image</div></td>
+                            <td class="product-name">Champurrado</td>
+                            <td>Bebidas</td>
+                            <td>$7.000</td>
+                            <td><span class="product_status product_status--active">Activo</span></td>
+                            <td>
+                                <div class="actions-cell">
+                                    <button class="link-action link-action--edit">Editar</button>
+                                    <button class="link-action link-action--danger">Desactivar</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><div class="product-thumb">Drop an image</div></td>
+                            <td class="product-name">Pastel Tres Chocolates</td>
+                            <td>Pasteles</td>
+                            <td>$32.000</td>
+                            <td><span class="product_status product_status--inactive">Inactivo</span></td>
+                            <td>
+                                <div class="actions-cell">
+                                    <button class="link-action link-action--edit">Editar</button>
+                                    <button class="link-action link-action--danger">Desactivar</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><div class="product-thumb">Drop an image</div></td>
+                            <td class="product-name">Cuernitos Dulces</td>
+                            <td>Galletas</td>
+                            <td>$9.000</td>
+                            <td><span class="product_status product_status--active">Activo</span></td>
+                            <td>
+                                <div class="actions-cell">
+                                    <button class="link-action link-action--edit">Editar</button>
+                                    <button class="link-action link-action--danger">Desactivar</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+    
+</body>
+</html>

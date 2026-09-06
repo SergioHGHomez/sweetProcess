@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuarios</title>
+    <link rel="stylesheet" href="../style.css">
+    <script src="https://kit.fontawesome.com/cbd3f1ded0.js" crossorigin="anonymous"></script>
+</head>
+<style>
+    .table-card{
+        padding : 0px;
+        overflow : hidden;
+    }
+
+    .user-table{
+        width : 100%;
+        border-collapse : collapse;
+    }
+
+    .user-table thead th{
+        background-color : var(--surface-sunken);
+        color : var(--text-secondary);
+        text-transform : uppercase;
+        font-size : 0.75rem;
+        letter-spacing : 0.04em;
+        text-align : left;
+        padding : 16px 20px;
+        font-weight : 700;
+    }
+
+    .user-table tbody td{
+        padding : 14px 20px;
+        border-top : 1px solid var(--border-default);
+        vertical-align : middle;
+    }
+
+    .user-table tbody tr:hover{
+        background-color : var(--surface-sunken);
+    }
+
+    .user-table .user-name{
+        font-weight : 700;
+        color : var(--text-primary);
+    }
+
+    .user-table .actions-cell{
+        display : flex;
+        align-items : center;
+        gap : 16px;
+    }
+
+    .link-action{
+        background : none;
+        border : none;
+        padding : 0px;
+        cursor : pointer;
+        font-weight : 600;
+        font-size : 0.9rem;
+        text-align : left;
+    }
+
+    .link-action--edit{
+        color : var(--text-link);
+    }
+
+    .link-action--edit:hover{
+        color : var(--text-link-hover);
+    }
+
+    .link-action--danger{
+        color : var(--error);
+    }
+
+    .link-action--danger:hover{
+        color : oklch(from var(--error) calc(l - 0.1) c h);
+    }
+
+    .user_status--active{
+        background-color : var(--brand-accent);
+        color : var(--neutral-900);
+    }
+
+    .user_status--inactive{
+        background-color : var(--neutral-100);
+        color : var(--text-muted);
+    }
+
+    .option--active{
+        background-color : var(--gold);
+        color : var(--neutral-900);
+    }
+</style>
+<body class="flex"></body>
+    <div id="menu">
+        <div id="menu-logo">
+            <img src="/src/logo/logo_simple.svg" alt="logo">
+        </div>
+        <p id="rol-name">Administrador</p>
+
+        <div class="options">
+            <div class="option">
+                <i class="fa-solid fa-house"></i>
+                <p>Home</p>
+            </div>
+           <div class="option">
+                <i class="option-icon fa-solid fa-chart-line"></i>
+                <p class="option-text">Dashboard</p>
+            </div>
+            <div class="option option--active">
+                <i class="option-icon fa-solid fa-user"></i>
+                <p class="option-text">Usuarios</p>
+            </div>
+            <div class="option">
+                <i class="option-icon fas fa-cookie-bite"></i>
+                <p class="option-text">Catalogo</p>
+            </div>
+        </div>
+        <div id="action-buttons">
+            <div CLass="action-button">
+                <i class="fa-solid fa-arrow-left-long"></i>
+                <p>Cerrar Sesión</p>
+            </div>
+        </div>
+    </div>
+    <main class="width-100">
+        <section>
+            <div class="header flex space-between center">
+                <div class="header_left">
+                    <h1>Usuarios</h1>
+                </div>
+                <div class="header_right flex space-between">
+                    <button class="button button--slim button--blue">
+                        <p>agregar usuario</p>
+                    </button>
+                </div>
+            </div>
+
+            <div class="card table-card">
+                <table class="user-table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Correo</th>
+                            <th>Rol</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="user-name">Jorge Peña</td>
+                            <td>jorge.pena@nolimits.mx</td>
+                            <td>Cocinero</td>
+                            <td><span class="product_status user_status--active">Activo</span></td>
+                            <td>
+                                <div class="actions-cell">
+                                    <button class="link-action link-action--edit">Restablecer contraseña</button>
+                                    <button class="link-action link-action--danger">Desactivar</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="user-name">Luis Herrera</td>
+                            <td>luis.herrera@nolimits.mx</td>
+                            <td>Repartidor</td>
+                            <td><span class="product_status user_status--active">Activo</span></td>
+                            <td>
+                                <div class="actions-cell">
+                                    <button class="link-action link-action--edit">Restablecer contraseña</button>
+                                    <button class="link-action link-action--danger">Desactivar</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="user-name">Diana Ortiz</td>
+                            <td>diana.ortiz@nolimits.mx</td>
+                            <td>Repartidor</td>
+                            <td><span class="product_status user_status--active">Activo</span></td>
+                            <td>
+                                <div class="actions-cell">
+                                    <button class="link-action link-action--edit">Restablecer contraseña</button>
+                                    <button class="link-action link-action--danger">Desactivar</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="user-name">Sofía Ramírez</td>
+                            <td>sofia.ramirez@nolimits.mx</td>
+                            <td>Administrador</td>
+                            <td><span class="product_status user_status--active">Activo</span></td>
+                            <td>
+                                <div class="actions-cell">
+                                    <button class="link-action link-action--edit">Restablecer contraseña</button>
+                                    <button class="link-action link-action--danger">Desactivar</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="user-name">Pablo Reyes</td>
+                            <td>pablo.reyes@nolimits.mx</td>
+                            <td>Cocinero</td>
+                            <td><span class="product_status user_status--inactive">Inactivo</span></td>
+                            <td>
+                                <div class="actions-cell">
+                                    <button class="link-action link-action--edit">Restablecer contraseña</button>
+                                    <button class="link-action link-action--danger">Desactivar</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>
