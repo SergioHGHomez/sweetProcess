@@ -10,33 +10,29 @@
 <body class="flex"></body>
     <div id="menu">
         <div id="menu-logo">
-            <img src="/src/logo/logo_simple.svg" alt="logo">
+            <img src="/src/Logo/logo_simple.svg" alt="logo">
         </div>
-        <p id="rol-name">Repartidor</p>
+        <p id="rol-name">Cocinero</p>
 
         <div class="options">
-            <div class="option">
+            <a class="option option--active" href="home.html">
                 <i class="fa-solid fa-house"></i>
                 <p>Home</p>
-            </div>
-           <div class="option">
-                <i class="option-icon fa-solid fa-chart-line"></i>
-                <p class="option-text">Dashboard</p>
-            </div>
-            <div class="option">
-                <i class="option-icon fa-solid fa-user"></i>
-                <p class="option-text">Usuarios</p>
-            </div>
-            <div class="option">
-                <i class="option-icon fas fa-cookie-bite"></i>
-                <p class="option-text">Catalogo</p>
-            </div>
+            </a>
+            <a class="option" href="PedidosActivos.html">
+                <i class="option-icon fa-regular fa-clipboard"></i>
+                <p class="option-text">Pedidos Activos</p>
+            </a>
+            <a class="option" href="PedidosPendientes.html">
+                <i class="option-icon fa-regular fa-clock"></i>
+                <p class="option-text">Pedidos Pendientes</p>
+            </a>
         </div>
         <div id="action-buttons">
-            <div CLass="action-button">
+            <a class="action-button" href="../nolimits-login/index.html">
                 <i class="fa-solid fa-arrow-left-long"></i>
                 <p>Cerrar Sesión</p>
-            </div>
+            </a>
         </div>
     </div>
     <main class="width-100">
