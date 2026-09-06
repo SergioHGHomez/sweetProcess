@@ -8,6 +8,7 @@
   --cream:#fff7e6;
   --brown-coffee:#6b3e26;
   --red:#c0392b;
+  --green:#2f7d4f;
 
   --grey-light:#ededed;
   --grey-dark:#748099;
@@ -113,6 +114,17 @@ p{
   height :fit-content;
 }
 
+#menu-logo > img {
+    width: 50%;
+    margin-top: 16px;
+    margin-left: 2px;
+}
+
+#rol-name{
+  margin-top : 26px;
+  font-size : 1rem;
+  color : var(--neutral-300);
+}
 
 .option{
   display : flex;
@@ -125,7 +137,7 @@ p{
 
 .option:hover{
 
-  background-color : var(--brand-accent-hover);
+  background-color : var(--gold);
   color : var(--neutral-900);
 }
 
@@ -148,7 +160,7 @@ p{
  margin : 0px;
 }
 .action-button:hover{
-  background-color : var(--brand-accent-hover);
+  background-color : var(--gold);
   color : var(--neutral-900);
 }
 
@@ -240,6 +252,10 @@ p{
 
 .option-icon--red{
   color : var(--red);
+}
+
+.option-icon--green{
+  color : var(--green);
 }
 
 .option-icon--cream{
