@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..800;1,400..800&family=Manrope:wght@200..800&display=swap');
 
 :root{
-  /* Brand palette */
+  /* paleta */
   --blue-deep:#1e3a8a;
   --blue-medium:#2563eb;
   --gold:#fbbf24;
@@ -25,7 +25,7 @@
   --cream-dark:oklch(from var(--cream) calc(l - 0.04) c h);
   --brown-light:oklch(from var(--brown-coffee) calc(l + 0.15) c h);
 
-  /* Neutrals (warm-tinted) */
+  /* Neutrals color (warm-tinted) */
   --neutral-900:oklch(0.22 0.02 55);
   --neutral-700:oklch(0.4 0.02 55);
   --neutral-500:oklch(0.58 0.015 55);
@@ -126,23 +126,13 @@ p{
   color : var(--neutral-300);
 }
 
-#menu a{
-  text-decoration : none;
-  color : inherit;
-}
-
 .option{
   display : flex;
   flex-direction : row;
-  align-items : center;
+  align-items : center;  
   gap : 10px;
   padding : 15px 10px;
   border-radius : 10px;
-}
-
-.option--active{
-  background-color : var(--gold);
-  color : var(--neutral-900);
 }
 
 .option:hover{
