@@ -223,7 +223,18 @@ p{
 
 }
 
+
+.option, .action-button{
+  color: var(--white);
+}
+
+.option a, .action-button a{
+  text-decoration: none;
+}
+
+
 /* icons */
+
 
 .option-icon{
   align-self: center;
