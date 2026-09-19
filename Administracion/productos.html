@@ -100,12 +100,145 @@
         background-color : var(--neutral-100);
         color : var(--text-muted);
     }
+
+    .modal-overlay{
+        display : none;
+        position : fixed;
+        inset : 0;
+        background-color : oklch(0.2 0.02 55 / 0.5);
+        align-items : center;
+        justify-content : center;
+        z-index : 100;
+    }
+
+    .modal-overlay.is-open{
+        display : flex;
+    }
+
+    .modal-card{
+        width : 100%;
+        max-width : 420px;
+        display : flex;
+        flex-direction : column;
+        gap : 16px;
+    }
+
+    .modal-card h2{
+        margin : 0px;
+    }
+
+    .form-field{
+        display : flex;
+        flex-direction : column;
+        gap : 6px;
+    }
+
+    .form-field label{
+        font-size : 0.85rem;
+        font-weight : 600;
+        color : var(--text-secondary);
+    }
+
+    .form-field input,
+    .form-field select{
+        padding : 10px 12px;
+        border-radius : 10px;
+        border : 1px solid var(--border-default);
+        font-family : var(--font-body);
+        font-size : 0.95rem;
+    }
+
+    .modal-actions{
+        display : flex;
+        justify-content : flex-end;
+        gap : 12px;
+        margin-top : 8px;
+    }
 </style>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        debugger;
-    cargaInicial();
-    renderProductos();
+        cargaInicial();
+        renderProductos();
+
+        const modal = document.getElementById("edit-product-modal");
+        const form = document.getElementById("edit-product-form");
+        const modalTitle = document.getElementById("edit-product-title");
+        let modalMode = "editar";
+
+        function abrirModalEdicion(id){
+            const producto = obtenerProductoPorId(id);
+            if(!producto) return;
+
+            modalMode = "editar";
+            modalTitle.textContent = "Editar producto";
+            document.getElementById("edit-product-id").value = producto.ProductoID;
+            document.getElementById("edit-product-nombre").value = producto.Nombre;
+            document.getElementById("edit-product-categoria").value = producto.Categoria;
+            document.getElementById("edit-product-precio").value = producto.Precio;
+            document.getElementById("edit-product-activo").value = producto.Activo ? "true" : "false";
+
+            modal.classList.add("is-open");
+        }
+
+        function abrirModalCreacion(){
+            modalMode = "agregar";
+            modalTitle.textContent = "Agregar producto";
+            form.reset();
+            document.getElementById("edit-product-id").value = "";
+            document.getElementById("edit-product-activo").value = "true";
+
+            modal.classList.add("is-open");
+        }
+
+        function cerrarModalEdicion(){
+            modal.classList.remove("is-open");
+        }
+
+        document.getElementById("admin-product__content").addEventListener("click", function(event) {
+            const botonEditar = event.target.closest(".link-action--edit");
+            if(botonEditar){
+                abrirModalEdicion(botonEditar.dataset.id);
+                return;
+            }
+
+            const botonEstado = event.target.closest(".link-action--danger");
+            if(botonEstado){
+                const producto = obtenerProductoPorId(botonEstado.dataset.id);
+                if(!producto) return;
+
+                actualizarProducto(producto.ProductoID, { Activo: !producto.Activo });
+                renderProductos();
+            }
+        });
+
+        document.getElementById("add-product-button").addEventListener("click", abrirModalCreacion);
+
+        document.getElementById("edit-product-cancel").addEventListener("click", cerrarModalEdicion);
+
+        modal.addEventListener("click", function(event) {
+            if(event.target === modal) cerrarModalEdicion();
+        });
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const datosProducto = {
+                Nombre: document.getElementById("edit-product-nombre").value,
+                Categoria: document.getElementById("edit-product-categoria").value,
+                Precio: Number(document.getElementById("edit-product-precio").value),
+                Activo: document.getElementById("edit-product-activo").value === "true"
+            };
+
+            if(modalMode === "agregar"){
+                agregarProducto(datosProducto);
+            } else {
+                const id = document.getElementById("edit-product-id").value;
+                actualizarProducto(id, datosProducto);
+            }
+
+            cerrarModalEdicion();
+            renderProductos();
+        });
     });
 </script>
 <body class="flex"></body>
@@ -142,9 +275,9 @@
                 <div class="header_left"> 
                     <h1>Catalogo</h1>
                 </div>
-                <div class="header_right flex space-between"> 
-                    <button class="button button--slim button--blue">
-                        <p>agregar producto</p> 
+                <div class="header_right flex space-between">
+                    <button id="add-product-button" type="button" class="button button--slim button--blue">
+                        <p>agregar producto</p>
                     </button>
                 </div>
             </div>
@@ -168,7 +301,42 @@
             </div>
         </section>
     </main>
-    
+
+    <div id="edit-product-modal" class="modal-overlay">
+        <form id="edit-product-form" class="card modal-card">
+            <h2 id="edit-product-title">Editar producto</h2>
+            <input type="hidden" id="edit-product-id">
+
+            <div class="form-field">
+                <label for="edit-product-nombre">Producto</label>
+                <input type="text" id="edit-product-nombre" required>
+            </div>
+
+            <div class="form-field">
+                <label for="edit-product-categoria">Categoría</label>
+                <input type="text" id="edit-product-categoria" required>
+            </div>
+
+            <div class="form-field">
+                <label for="edit-product-precio">Precio</label>
+                <input type="number" id="edit-product-precio" min="0" required>
+            </div>
+
+            <div class="form-field">
+                <label for="edit-product-activo">Estado</label>
+                <select id="edit-product-activo">
+                    <option value="true">Activo</option>
+                    <option value="false">Inactivo</option>
+                </select>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" id="edit-product-cancel" class="button button--white">Cancelar</button>
+                <button type="submit" class="button button--blue">Guardar</button>
+            </div>
+        </form>
+    </div>
+
 </body>
 </html>
 

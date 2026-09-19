@@ -23,6 +23,31 @@
         localStorage.setItem("productos", JSON.stringify(productos));
     }
 
+    function agregarProducto(datosProducto){
+        let productos = traerProductos();
+        let nuevoId = productos.reduce((maxId, producto) => Math.max(maxId, producto.ProductoID), 0) + 1;
+
+        productos.push({ ProductoID: nuevoId, Foto: "", ...datosProducto });
+        localStorage.setItem("productos", JSON.stringify(productos));
+        return nuevoId;
+    }
+
+    function obtenerProductoPorId(id){
+        let productos = traerProductos();
+        return productos.find(producto => producto.ProductoID == id);
+    }
+
+    function actualizarProducto(id, datosActualizados){
+        let productos = traerProductos();
+        let index = productos.findIndex(producto => producto.ProductoID == id);
+
+        if(index === -1) return false;
+
+        productos[index] = { ...productos[index], ...datosActualizados };
+        localStorage.setItem("productos", JSON.stringify(productos));
+        return true;
+    }
+
     function traerProductos(){
         let productos = JSON.parse(localStorage.getItem("productos"));
         debugger;
@@ -121,8 +146,8 @@
                 <td><span class="product_status product_status--${productos[i].Activo ? "active" : "inactive"}">${productos[i].Activo ? "Activo" : "Inactivo"}</span></td>
                 <td>
                     <div class="actions-cell">
-                        <button class="link-action link-action--edit">Editar</button>
-                        <button class="link-action link-action--danger">Desactivar</button>
+                        <button class="link-action link-action--edit" data-id="${productos[i].ProductoID}">Editar</button>
+                        <button class="link-action link-action--danger" data-id="${productos[i].ProductoID}">${productos[i].Activo ? "Desactivar" : "Activar"}</button>
                     </div>
                 </td>
             </tr>
