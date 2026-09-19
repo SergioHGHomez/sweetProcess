@@ -140,15 +140,34 @@
     note.className = "form-note";
     setLoading(formCliente, true);
 
-    loginUsuario(email, password).then((res) => {
+    setTimeout(() => {
+      const res = validarCliente(email, password);
       setLoading(formCliente, false);
-      if (res.ok) {
-        note.textContent = "¡Bienvenido de vuelta, " + res.nombre + "!";
-        note.className = "form-note is-success";
-        showToast("Sesión iniciada como cliente", "success");
-        formCliente.reset();
+
+      if (!res.ok) {
+        note.textContent = res.motivo === "no-existe"
+          ? "Ese correo no está registrado. Crea tu cuenta para continuar."
+          : "Contraseña incorrecta.";
+        note.className = "form-note is-error";
+        return;
       }
-    });
+
+      const cliente = res.cliente;
+      localStorage.setItem("sesionCliente", JSON.stringify({
+        ClienteID: cliente.ClienteID,
+        Nombre: cliente.Nombre,
+        Correo: cliente.Correo
+      }));
+
+      note.textContent = "¡Bienvenido de vuelta, " + cliente.Nombre + "!";
+      note.className = "form-note is-success";
+      showToast("Sesión iniciada como cliente", "success");
+      formCliente.reset();
+
+      setTimeout(() => {
+        window.location.href = "../nolimitsInterfazCliente/nolimits/index.html";
+      }, 600);
+    }, 900);
   });
 
 
@@ -302,6 +321,14 @@
 
     const note = $("#registerFormNote");
     if (!valid) {
+      note.textContent = "Revisa los campos marcados en rojo.";
+      note.className = "form-note is-error";
+      return;
+    }
+
+    const registro = registrarCliente({ Nombre: name, Correo: email, Contrasena: password });
+    if (!registro.ok) {
+      setFieldError("registerEmail", "registerEmailError", "Ese correo ya está registrado.");
       note.textContent = "Revisa los campos marcados en rojo.";
       note.className = "form-note is-error";
       return;

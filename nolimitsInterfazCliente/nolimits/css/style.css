@@ -143,7 +143,11 @@ button{ font-family: inherit; cursor: pointer; }
   color: var(--navy);
 }
 
-.navbar__cart{
+.navbar__logout{ font-family: inherit; }
+.navbar__logout:hover{ border-color: var(--navy); }
+
+.navbar__cart,
+.navbar__logout{
   display: flex;
   align-items: center;
   gap: 8px;

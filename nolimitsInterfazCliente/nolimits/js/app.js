@@ -484,9 +484,18 @@ const NOLIMITS = (function () {
               Carrito
               <span class="navbar__cart-badge" data-cart-badge hidden>0</span>
             </a>
+            <button type="button" class="navbar__logout" id="logoutBtn">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i>
+              Cerrar sesión
+            </button>
           </div>
         </div>
       `;
+
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        localStorage.removeItem("sesionCliente");
+        window.location.href = "../../nolimits-login/index.html";
+      });
 
       const links = navMount.querySelectorAll("[data-nav]");
       links.forEach((a) => {
@@ -519,6 +528,12 @@ const NOLIMITS = (function () {
         <p class="site-footer__bottom">© ${new Date().getFullYear()} nolimits postrería. Todos los derechos reservados.</p>
       `;
     }
+
+    try {
+      const sesion = JSON.parse(localStorage.getItem("sesionCliente"));
+      const nameEl = document.querySelector("[data-user-name]");
+      if (sesion && nameEl) nameEl.textContent = sesion.Nombre.split(" ")[0];
+    } catch (e) {}
 
     updateCartBadge();
     renderA11yWidget();

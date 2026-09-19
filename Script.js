@@ -84,7 +84,7 @@
     "Categoria": "Galletas",
     "Precio": 12000,
     "Activo": true,
-    "Foto": ""
+    "Foto": "src/productos/alfajores.jpg"
   },
   {
     "ProductoID": 4,
@@ -92,7 +92,7 @@
     "Categoria": "Galletas",
     "Precio": 10000,
     "Activo": true,
-    "Foto": ""
+    "Foto": "src/productos/Polvorones.jpg"
   },
   {
     "ProductoID": 5,
@@ -100,7 +100,7 @@
     "Categoria": "Bebidas",
     "Precio": 6000,
     "Activo": true,
-    "Foto": ""
+    "Foto": "src/productos/cafe-de-la-olla.jpg"
   },
   {
     "ProductoID": 6,
@@ -108,7 +108,7 @@
     "Categoria": "Bebidas",
     "Precio": 7000,
     "Activo": true,
-    "Foto": ""
+    "Foto": "src/productos/Champurrado.jpg"
   },
   {
     "ProductoID": 7,
@@ -262,3 +262,38 @@
         document.getElementById("admin-user__content").innerHTML = usuariosHTML;
     }
 
+
+
+    function traerClientes(){
+        let clientes = JSON.parse(localStorage.getItem("clientes"));
+        if(clientes){
+            return clientes;
+        }
+
+        return [];
+    }
+
+    function registrarCliente(datosCliente){
+        let clientes = traerClientes();
+        let correo = String(datosCliente.Correo).trim().toLowerCase();
+
+        if(clientes.some(cliente => cliente.Correo.toLowerCase() === correo)){
+            return { ok: false, motivo: "existe" };
+        }
+
+        let nuevoId = clientes.reduce((maxId, cliente) => Math.max(maxId, cliente.ClienteID), 0) + 1;
+        let cliente = { ClienteID: nuevoId, Nombre: datosCliente.Nombre, Correo: correo, Contrasena: datosCliente.Contrasena };
+
+        clientes.push(cliente);
+        localStorage.setItem("clientes", JSON.stringify(clientes));
+        return { ok: true, cliente: cliente };
+    }
+
+    function validarCliente(correo, contrasena){
+        let cliente = traerClientes().find(c => c.Correo.toLowerCase() === String(correo).trim().toLowerCase());
+
+        if(!cliente) return { ok: false, motivo: "no-existe" };
+        if(cliente.Contrasena !== contrasena) return { ok: false, motivo: "contrasena" };
+
+        return { ok: true, cliente: cliente };
+    }
