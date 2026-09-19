@@ -189,6 +189,11 @@ p{
   display : flex;
 }
 
+.link-action{
+  cursor : pointer;
+}
+
+
 /* header */
 .hearder_circle{
   background-color : var(--blue-deep);

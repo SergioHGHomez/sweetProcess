@@ -53,6 +53,7 @@
         align-items : center;
         justify-content : center;
         line-height : 1.1;
+        object-fit : cover;
     }
 
     .product-table .product-name{
@@ -154,6 +155,37 @@
         gap : 12px;
         margin-top : 8px;
     }
+
+    .photo-picker{
+        display : grid;
+        grid-template-columns : repeat(4, 1fr);
+        gap : 10px;
+    }
+
+    .photo-picker__item{
+        padding : 0px;
+        border-radius : 10px;
+        border : 2px solid var(--border-default);
+        background-color : var(--surface-sunken);
+        cursor : pointer;
+        overflow : hidden;
+        aspect-ratio : 1;
+        display : flex;
+        align-items : center;
+        justify-content : center;
+        color : var(--text-muted);
+        font-size : 0.7rem;
+    }
+
+    .photo-picker__item img{
+        width : 100%;
+        height : 100%;
+        object-fit : cover;
+    }
+
+    .photo-picker__item.is-selected{
+        border-color : var(--brand-primary);
+    }
 </style>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -163,7 +195,42 @@
         const modal = document.getElementById("edit-product-modal");
         const form = document.getElementById("edit-product-form");
         const modalTitle = document.getElementById("edit-product-title");
+        const fotoInput = document.getElementById("edit-product-foto");
+        const photoPicker = document.getElementById("edit-product-photo-picker");
         let modalMode = "editar";
+
+        const IMAGENES_DISPONIBLES = [
+            "src/productos/cheesecake-frutos-rojos.jpeg",
+            "src/productos/cheesecake-maracumango-1.jpeg",
+            "src/productos/cheesecake-maracumango-2.jpeg",
+            "src/productos/postre-limon.jpeg"
+        ];
+
+        function renderGaleriaFotos(){
+            let galeriaHTML = `<button type="button" class="photo-picker__item" data-src="">Ninguna</button>`;
+
+            for (let i = 0; i < IMAGENES_DISPONIBLES.length; i++) {
+                galeriaHTML += `<button type="button" class="photo-picker__item" data-src="${IMAGENES_DISPONIBLES[i]}"><img src="../${IMAGENES_DISPONIBLES[i]}" alt=""></button>`;
+            }
+
+            photoPicker.innerHTML = galeriaHTML;
+        }
+
+        function seleccionarFoto(ruta){
+            fotoInput.value = ruta;
+            photoPicker.querySelectorAll(".photo-picker__item").forEach(function(item) {
+                item.classList.toggle("is-selected", item.dataset.src === ruta);
+            });
+        }
+
+        photoPicker.addEventListener("click", function(event) {
+            const item = event.target.closest(".photo-picker__item");
+            if(!item) return;
+
+            seleccionarFoto(item.dataset.src);
+        });
+
+        renderGaleriaFotos();
 
         function abrirModalEdicion(id){
             const producto = obtenerProductoPorId(id);
@@ -176,6 +243,7 @@
             document.getElementById("edit-product-categoria").value = producto.Categoria;
             document.getElementById("edit-product-precio").value = producto.Precio;
             document.getElementById("edit-product-activo").value = producto.Activo ? "true" : "false";
+            seleccionarFoto(producto.Foto || "");
 
             modal.classList.add("is-open");
         }
@@ -186,6 +254,7 @@
             form.reset();
             document.getElementById("edit-product-id").value = "";
             document.getElementById("edit-product-activo").value = "true";
+            seleccionarFoto("");
 
             modal.classList.add("is-open");
         }
@@ -226,7 +295,8 @@
                 Nombre: document.getElementById("edit-product-nombre").value,
                 Categoria: document.getElementById("edit-product-categoria").value,
                 Precio: Number(document.getElementById("edit-product-precio").value),
-                Activo: document.getElementById("edit-product-activo").value === "true"
+                Activo: document.getElementById("edit-product-activo").value === "true",
+                Foto: fotoInput.value
             };
 
             if(modalMode === "agregar"){
@@ -328,6 +398,12 @@
                     <option value="true">Activo</option>
                     <option value="false">Inactivo</option>
                 </select>
+            </div>
+
+            <div class="form-field">
+                <label>Foto</label>
+                <input type="hidden" id="edit-product-foto">
+                <div id="edit-product-photo-picker" class="photo-picker"></div>
             </div>
 
             <div class="modal-actions">

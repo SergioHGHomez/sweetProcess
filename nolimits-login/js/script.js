@@ -3,7 +3,8 @@
 
 
   const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const EMPLOYEE_DOMAIN = "@nolimits.co";
+
+  cargaInicialUsuarios();
 
   function $(selector, scope) {
     return (scope || document).querySelector(selector);
@@ -165,9 +166,6 @@
     } else if (!EMAIL_REGEX.test(email)) {
       setFieldError("empleadoEmail", "empleadoEmailError", "Ese correo no parece válido.");
       valid = false;
-    } else if (!email.toLowerCase().endsWith(EMPLOYEE_DOMAIN)) {
-      setFieldError("empleadoEmail", "empleadoEmailError", "Usa tu correo corporativo (" + EMPLOYEE_DOMAIN + ").");
-      valid = false;
     } else {
       setFieldError("empleadoEmail", "empleadoEmailError", "");
     }
@@ -193,15 +191,37 @@
     note.className = "form-note";
     setLoading(formEmpleado, true);
 
-    loginUsuario(email, password).then((res) => {
+    setTimeout(() => {
+      const res = validarEmpleado(email, password);
       setLoading(formEmpleado, false);
-      if (res.ok) {
-        note.textContent = "Acceso concedido, " + res.nombre + ".";
-        note.className = "form-note is-success";
-        showToast("Sesión iniciada como empleado", "success");
-        formEmpleado.reset();
+
+      if (!res.ok) {
+        const mensajes = {
+          "no-existe": "Ese correo no está registrado.",
+          "inactivo": "Tu usuario está desactivado. Contacta al administrador.",
+          "contrasena": "Contraseña incorrecta."
+        };
+        note.textContent = mensajes[res.motivo];
+        note.className = "form-note is-error";
+        return;
       }
-    });
+
+      const usuario = res.usuario;
+      localStorage.setItem("sesionEmpleado", JSON.stringify({
+        UsuarioID: usuario.UsuarioID,
+        Nombre: usuario.Nombre,
+        Rol: usuario.Rol
+      }));
+
+      note.textContent = "Acceso concedido, " + usuario.Nombre + ".";
+      note.className = "form-note is-success";
+      showToast("Sesión iniciada como empleado", "success");
+      formEmpleado.reset();
+
+      setTimeout(() => {
+        window.location.href = rutaPorRol(usuario.Rol);
+      }, 600);
+    }, 900);
   });
 
 

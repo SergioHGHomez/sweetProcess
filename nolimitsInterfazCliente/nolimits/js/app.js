@@ -169,8 +169,42 @@ const NOLIMITS_PRODUCTS = [
   },
 ];
 
+/* El catálogo se alimenta de traerProductos() (Script.js, localStorage
+   compartido con el panel de administración). Solo se muestran los
+   productos activos. NOLIMITS_PRODUCTS aporta los datos que el panel no
+   guarda (descripciones, porciones, compatibilidad) cuando el nombre
+   coincide; si no hay coincidencia se usan valores por defecto. */
+function nolimitsCatalog() {
+  if (typeof traerProductos !== "function") return NOLIMITS_PRODUCTS;
+  if (typeof cargaInicial === "function") cargaInicial();
+
+  return traerProductos()
+    .filter((p) => p.Activo)
+    .map((p) => {
+      const base = NOLIMITS_PRODUCTS.find(
+        (s) => s.nombre.toLowerCase() === String(p.Nombre).toLowerCase()
+      );
+      return {
+        id: base ? base.id : "producto-" + p.ProductoID,
+        nombre: p.Nombre,
+        categoria: String(p.Categoria).toLowerCase(),
+        badge: base ? base.badge : "",
+        precio: p.Precio,
+        porciones: base ? base.porciones : 1,
+        tiempo: base ? base.tiempo : "listo en 24h",
+        descCorta: base ? base.descCorta : p.Nombre,
+        descLarga: base ? base.descLarga : p.Nombre,
+        // Script.js vive en la raíz del proyecto: las fotos se guardan relativas a ella
+        imgs: p.Foto ? ["../../" + p.Foto] : base ? base.imgs : [],
+        compat: base
+          ? base.compat
+          : { mani: false, lactosa: false, gluten: false, vegano: false },
+      };
+    });
+}
+
 function nolimitsGetProduct(id) {
-  return NOLIMITS_PRODUCTS.find((p) => p.id === id);
+  return nolimitsCatalog().find((p) => p.id === id);
 }
 
 /* Extras opcionales con costo adicional, disponibles al agregar un
@@ -700,8 +734,11 @@ const NOLIMITS_VIEWS = (function () {
 
   /* ---------------- HOME ---------------- */
   function renderHome() {
-    const featuredIds = ["cheesecake-maracumango", "cheesecake-frutos-rojos", "postre-limon"];
-    const featured = featuredIds.map(nolimitsGetProduct).filter(Boolean);
+    const catalog = nolimitsCatalog();
+    const featured = catalog
+      .filter((p) => p.badge === "MÁS PEDIDO")
+      .concat(catalog.filter((p) => p.badge !== "MÁS PEDIDO"))
+      .slice(0, 3);
 
     app().innerHTML = `
       <section class="hero">
@@ -837,7 +874,7 @@ const NOLIMITS_VIEWS = (function () {
       const cat = categorySelect.value;
       const sort = sortSelect.value;
 
-      let items = NOLIMITS_PRODUCTS.filter((p) => {
+      let items = nolimitsCatalog().filter((p) => {
         const matchesCat = cat === "todas" || p.categoria === cat;
         const matchesQuery = !q || p.nombre.toLowerCase().includes(q) || p.descCorta.toLowerCase().includes(q);
         return matchesCat && matchesQuery;

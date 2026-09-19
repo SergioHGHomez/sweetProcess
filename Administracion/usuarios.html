@@ -6,6 +6,7 @@
     <title>Usuarios</title>
     <link rel="stylesheet" href="../style.css">
     <script src="https://kit.fontawesome.com/cbd3f1ded0.js" crossorigin="anonymous"></script>
+    <script src="../Script.js"></script>
 </head>
 <style>
     .table-card{
@@ -60,11 +61,13 @@
         text-align : left;
     }
 
-    .link-action--edit{
+    .link-action--edit,
+    .link-action--reset{
         color : var(--text-link);
     }
 
-    .link-action--edit:hover{
+    .link-action--edit:hover,
+    .link-action--reset:hover{
         color : var(--text-link-hover);
     }
 
@@ -85,7 +88,165 @@
         background-color : var(--neutral-100);
         color : var(--text-muted);
     }
+
+    .modal-overlay{
+        display : none;
+        position : fixed;
+        inset : 0;
+        background-color : oklch(0.2 0.02 55 / 0.5);
+        align-items : center;
+        justify-content : center;
+        z-index : 100;
+    }
+
+    .modal-overlay.is-open{
+        display : flex;
+    }
+
+    .modal-card{
+        width : 100%;
+        max-width : 420px;
+        display : flex;
+        flex-direction : column;
+        gap : 16px;
+    }
+
+    .modal-card h2{
+        margin : 0px;
+    }
+
+    .form-field{
+        display : flex;
+        flex-direction : column;
+        gap : 6px;
+    }
+
+    .form-field label{
+        font-size : 0.85rem;
+        font-weight : 600;
+        color : var(--text-secondary);
+    }
+
+    .form-field input,
+    .form-field select{
+        padding : 10px 12px;
+        border-radius : 10px;
+        border : 1px solid var(--border-default);
+        font-family : var(--font-body);
+        font-size : 0.95rem;
+    }
+
+    .modal-actions{
+        display : flex;
+        justify-content : flex-end;
+        gap : 12px;
+        margin-top : 8px;
+    }
 </style>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        cargaInicialUsuarios();
+        renderUsuarios();
+
+        const modal = document.getElementById("edit-user-modal");
+        const form = document.getElementById("edit-user-form");
+        const modalTitle = document.getElementById("edit-user-title");
+        let modalMode = "editar";
+
+        function abrirModalEdicion(id){
+            const usuario = obtenerUsuarioPorId(id);
+            if(!usuario) return;
+
+            modalMode = "editar";
+            modalTitle.textContent = "Editar usuario";
+            document.getElementById("edit-user-id").value = usuario.UsuarioID;
+            document.getElementById("edit-user-nombre").value = usuario.Nombre;
+            document.getElementById("edit-user-correo").value = usuario.Correo;
+            document.getElementById("edit-user-rol").value = usuario.Rol;
+            document.getElementById("edit-user-activo").value = usuario.Activo ? "true" : "false";
+            document.getElementById("edit-user-contrasena").value = "";
+            document.getElementById("edit-user-contrasena").required = false;
+            document.getElementById("edit-user-contrasena").placeholder = "Dejar vacío para conservar la actual";
+
+            modal.classList.add("is-open");
+        }
+
+        function abrirModalCreacion(){
+            modalMode = "agregar";
+            modalTitle.textContent = "Agregar usuario";
+            form.reset();
+            document.getElementById("edit-user-id").value = "";
+            document.getElementById("edit-user-activo").value = "true";
+            document.getElementById("edit-user-contrasena").value = CONTRASENA_POR_DEFECTO;
+            document.getElementById("edit-user-contrasena").required = true;
+            document.getElementById("edit-user-contrasena").placeholder = "";
+
+            modal.classList.add("is-open");
+        }
+
+        function cerrarModal(){
+            modal.classList.remove("is-open");
+        }
+
+        document.getElementById("admin-user__content").addEventListener("click", function(event) {
+            const botonEditar = event.target.closest(".link-action--edit");
+            if(botonEditar){
+                abrirModalEdicion(botonEditar.dataset.id);
+                return;
+            }
+
+            const botonReset = event.target.closest(".link-action--reset");
+            if(botonReset){
+                const usuario = obtenerUsuarioPorId(botonReset.dataset.id);
+                if(usuario){
+                    actualizarUsuario(usuario.UsuarioID, { Contrasena: CONTRASENA_POR_DEFECTO });
+                    alert("La contraseña de " + usuario.Nombre + " se restableció a: " + CONTRASENA_POR_DEFECTO);
+                }
+                return;
+            }
+
+            const botonEstado = event.target.closest(".link-action--danger");
+            if(botonEstado){
+                const usuario = obtenerUsuarioPorId(botonEstado.dataset.id);
+                if(!usuario) return;
+
+                actualizarUsuario(usuario.UsuarioID, { Activo: !usuario.Activo });
+                renderUsuarios();
+            }
+        });
+
+        document.getElementById("add-user-button").addEventListener("click", abrirModalCreacion);
+
+        document.getElementById("edit-user-cancel").addEventListener("click", cerrarModal);
+
+        modal.addEventListener("click", function(event) {
+            if(event.target === modal) cerrarModal();
+        });
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const datosUsuario = {
+                Nombre: document.getElementById("edit-user-nombre").value,
+                Correo: document.getElementById("edit-user-correo").value,
+                Rol: document.getElementById("edit-user-rol").value,
+                Activo: document.getElementById("edit-user-activo").value === "true"
+            };
+
+            const contrasena = document.getElementById("edit-user-contrasena").value;
+            if(contrasena) datosUsuario.Contrasena = contrasena;
+
+            if(modalMode === "agregar"){
+                agregarUsuario(datosUsuario);
+            } else {
+                actualizarUsuario(document.getElementById("edit-user-id").value, datosUsuario);
+            }
+
+            cerrarModal();
+            renderUsuarios();
+        });
+    });
+</script>
 <body class="flex"></body>
     <div id="menu">
         <div id="menu-logo">
@@ -121,7 +282,7 @@
                     <h1>Usuarios</h1>
                 </div>
                 <div class="header_right flex space-between">
-                    <button class="button button--slim button--blue">
+                    <button id="add-user-button" type="button" class="button button--slim button--blue">
                         <p>agregar usuario</p>
                     </button>
                 </div>
@@ -138,72 +299,55 @@
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td class="user-name">Jorge Peña</td>
-                            <td>jorge.pena@nolimits.mx</td>
-                            <td>Cocinero</td>
-                            <td><span class="product_status user_status--active">Activo</span></td>
-                            <td>
-                                <div class="actions-cell">
-                                    <button class="link-action link-action--edit">Restablecer contraseña</button>
-                                    <button class="link-action link-action--danger">Desactivar</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="user-name">Luis Herrera</td>
-                            <td>luis.herrera@nolimits.mx</td>
-                            <td>Repartidor</td>
-                            <td><span class="product_status user_status--active">Activo</span></td>
-                            <td>
-                                <div class="actions-cell">
-                                    <button class="link-action link-action--edit">Restablecer contraseña</button>
-                                    <button class="link-action link-action--danger">Desactivar</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="user-name">Diana Ortiz</td>
-                            <td>diana.ortiz@nolimits.mx</td>
-                            <td>Repartidor</td>
-                            <td><span class="product_status user_status--active">Activo</span></td>
-                            <td>
-                                <div class="actions-cell">
-                                    <button class="link-action link-action--edit">Restablecer contraseña</button>
-                                    <button class="link-action link-action--danger">Desactivar</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="user-name">Sofía Ramírez</td>
-                            <td>sofia.ramirez@nolimits.mx</td>
-                            <td>Administrador</td>
-                            <td><span class="product_status user_status--active">Activo</span></td>
-                            <td>
-                                <div class="actions-cell">
-                                    <button class="link-action link-action--edit">Restablecer contraseña</button>
-                                    <button class="link-action link-action--danger">Desactivar</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="user-name">Pablo Reyes</td>
-                            <td>pablo.reyes@nolimits.mx</td>
-                            <td>Cocinero</td>
-                            <td><span class="product_status user_status--inactive">Inactivo</span></td>
-                            <td>
-                                <div class="actions-cell">
-                                    <button class="link-action link-action--edit">Restablecer contraseña</button>
-                                    <button class="link-action link-action--danger">Desactivar</button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
+                    <tbody id="admin-user__content"></tbody>
                 </table>
             </div>
         </section>
     </main>
+
+    <div id="edit-user-modal" class="modal-overlay">
+        <form id="edit-user-form" class="card modal-card">
+            <h2 id="edit-user-title">Editar usuario</h2>
+            <input type="hidden" id="edit-user-id">
+
+            <div class="form-field">
+                <label for="edit-user-nombre">Nombre</label>
+                <input type="text" id="edit-user-nombre" required>
+            </div>
+
+            <div class="form-field">
+                <label for="edit-user-correo">Correo</label>
+                <input type="email" id="edit-user-correo" required>
+            </div>
+
+            <div class="form-field">
+                <label for="edit-user-rol">Rol</label>
+                <select id="edit-user-rol">
+                    <option value="Administrador">Administrador</option>
+                    <option value="Cocinero">Cocinero</option>
+                    <option value="Repartidor">Repartidor</option>
+                </select>
+            </div>
+
+            <div class="form-field">
+                <label for="edit-user-contrasena">Contraseña</label>
+                <input type="text" id="edit-user-contrasena" minlength="6">
+            </div>
+
+            <div class="form-field">
+                <label for="edit-user-activo">Estado</label>
+                <select id="edit-user-activo">
+                    <option value="true">Activo</option>
+                    <option value="false">Inactivo</option>
+                </select>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" id="edit-user-cancel" class="button button--white">Cancelar</button>
+                <button type="submit" class="button button--blue">Guardar</button>
+            </div>
+        </form>
+    </div>
 
 </body>
 </html>
